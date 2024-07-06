@@ -154,6 +154,7 @@ public class Biscuit {
         }
         vars.add(var);
         SpecVars.checkSpecVar(var);
+        varCallback.VarCallbackBehavior(var);
     }
 
     public static short checkType(String val) { // 0 == str, 1 == int, 2 == double, 3 == boolean
