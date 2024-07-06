@@ -1,3 +1,4 @@
 set $echo "blina muha les gystou" //comment test lol
 set test1 "kllo"
 $echo test1
+set $mod "/home/adisteyf/IdeaProjects/biscuit/src/main/test2.bsqt"

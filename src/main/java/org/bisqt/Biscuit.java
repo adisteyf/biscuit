@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Biscuit {
     final static ArrayList<Variable> vars = new ArrayList<>();
-    public static String nextScriptForStart = null;
+    public static String nextScriptForStart;
 
     private static ArrayList<ArrayList<String>> getDivs(ArrayList<String> str) {
         Pattern pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
@@ -38,6 +38,7 @@ public class Biscuit {
     }
 
     public void readScript(String path) {
+        nextScriptForStart=null;
         File file = new File(path);
         ArrayList<String> lines = new ArrayList<>();
 
@@ -54,6 +55,9 @@ public class Biscuit {
 
         ArrayList<ArrayList<String>> divs = getDivs(lines);
         checkCommands(divs);
+        if (nextScriptForStart != null) {
+            readScript(nextScriptForStart);
+        }
     }
 
     private static void checkCommands(ArrayList<ArrayList<String>> divs) {
