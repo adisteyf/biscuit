@@ -1,7 +1,7 @@
 package org.bisqt;
 
 public class Variable {
-    final String name;
+    public final String name;
     private Object val;
     public Variable(String name, Object val) {
         this.name = name;

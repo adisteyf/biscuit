@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Biscuit {
+    static VarCallbackI varCallback;
     final static ArrayList<Variable> vars = new ArrayList<>();
     public static String nextScriptForStart;
 
@@ -125,12 +126,13 @@ public class Biscuit {
         }
     }
 
-    private static void changeVal(String name, Object val) {
+    private static void changeVal(String name, Object val) { // TODO: написать Variable
         boolean changed = false;
         for (Variable var : vars) {
             if (Objects.equals(var.name, name)) {
                 var.chVal(val);
                 SpecVars.checkSpecVar(var);
+                varCallback.VarCallbackBehavior(new Variable(name, val));
                 changed=true;
             }
         }
@@ -198,5 +200,9 @@ public class Biscuit {
 
     public ArrayList<Variable> getVars() {
         return vars;
+    }
+
+    public void setVarCallback(VarCallbackI varCallback) {
+        this.varCallback = varCallback;
     }
 }
