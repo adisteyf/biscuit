@@ -86,11 +86,12 @@ public class Biscuit {
                             case 3:
                                 if (Objects.equals(line.get(2), "true")) addVar(new Variable(line.get(1), true));
                                 else addVar(new Variable(line.get(1), false));
+                                break;
                             case -1:
                                 if (getVar(line.get(2)) != null && getVar(line.get(2)).getVal() != null) {
                                     addVar(new Variable(line.get(1), getVar(line.get(2)).getVal()));
                                 } else {
-                                    System.err.println("ERROR: checkType(): INCORRECT TYPE OF VAR");
+                                    System.err.println("ERROR: checkType(): set: INCORRECT TYPE OF VAR");
                                     System.exit(-1);
                                 }
                                 break;
