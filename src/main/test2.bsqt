@@ -1,1 +1,2 @@
-$echo "this works!"
+clearvars
+set $echo "this works!"

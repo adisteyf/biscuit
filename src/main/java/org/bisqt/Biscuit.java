@@ -93,6 +93,10 @@ public class Biscuit {
                 case "exit":
                     return;
 
+                case "clearvars":
+                    vars.clear();
+                    break;
+
                 default:
                     if (line.size() == 2 && getVar(line.getFirst()) != null) {
                         if (checkType(line.get(1)) != -1) {
