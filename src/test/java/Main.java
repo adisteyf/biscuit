@@ -4,5 +4,6 @@ public class Main {
     public static void main(String[] args) {
         Biscuit test = new Biscuit();
         test.readScript("/home/adisteyf/IdeaProjects/biscuit/src/main/testscript.bsqt");
+        test.readLines("$echo \"test\";$echo \"testlolol\"");
     }
 }

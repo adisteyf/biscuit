@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +59,13 @@ public class Biscuit {
         if (nextScriptForStart != null) {
             readScript(nextScriptForStart);
         }
+    }
+
+    public void readLines(String lines) {
+        ArrayList<String> lines_arr = new ArrayList<>(Arrays.asList(lines.split(";")));
+
+        ArrayList<ArrayList<String>> divs = getDivs(lines_arr);
+        checkCommands(divs);
     }
 
     private static void checkCommands(ArrayList<ArrayList<String>> divs) {
