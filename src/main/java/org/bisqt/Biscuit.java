@@ -166,7 +166,7 @@ public class Biscuit {
         return -1;
     }
 
-    private static Variable getVar(String name) {
+    public static Variable getVar(String name) {
         for (Variable check : vars) {
             if (Objects.equals(check.name, name)) return check;
         }
@@ -193,5 +193,9 @@ public class Biscuit {
                 }
         }
         return -1;
+    }
+
+    public ArrayList<Variable> getVars() {
+        return vars;
     }
 }
