@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="biscuit:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/biscuit_jar</output-path>
+    <root id="archive" name="biscuit.jar">
+      <element id="module-output" name="biscuit.main" />
+    </root>
+  </artifact>
+</component>
