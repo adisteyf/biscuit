@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class Biscuit {
     final static ArrayList<Variable> vars = new ArrayList<>();
+    public static String nextScriptForStart = null;
 
     private static ArrayList<ArrayList<String>> getDivs(ArrayList<String> str) {
         Pattern pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
@@ -85,6 +86,9 @@ public class Biscuit {
                     }
                     break;
 
+                case "exit":
+                    return;
+
                 default:
                     if (line.size() == 2 && getVar(line.getFirst()) != null) {
                         if (checkType(line.get(1)) != -1) {
@@ -109,9 +113,7 @@ public class Biscuit {
         for (Variable var : vars) {
             if (Objects.equals(var.name, name)) {
                 var.chVal(val);
-                if (name.equals("$echo")) {
-                    System.out.println(val);
-                }
+                SpecVars.checkSpecVar(var);
                 changed=true;
             }
         }
@@ -126,18 +128,16 @@ public class Biscuit {
         for (Variable check : vars) {
             if (Objects.equals(var.name, check.name))
                 return;
-            if (!var.name.matches("^(?![0-9])[a-zA-Z0-9_]*$") && !var.name.equals("$echo")) { // ^[^0-9][a-zA-Z0-9_]*$
+            if (!var.name.matches("^(?![0-9])[a-zA-Z0-9_]*$") && !SpecVars.isSpecVar(var)) { // ^[^0-9][a-zA-Z0-9_]*$
                 System.err.println("ERROR: set: INCORRECT VAR NAME '"+var.name+"'");
                 System.exit(-1);
             }
         }
         vars.add(var);
-        if (var.name.equals("$echo")) {
-            System.out.println(getVar("$echo").getVal());
-        }
+        SpecVars.checkSpecVar(var);
     }
 
-    private static short checkType(String val) { // 0 == str, 1 == int, 2 == double, 3 == boolean
+    public static short checkType(String val) { // 0 == str, 1 == int, 2 == double, 3 == boolean
         if (val.startsWith("\"") && val.endsWith("\"")) {
             return 0;
         } else if (val.matches("\\d+")) {
