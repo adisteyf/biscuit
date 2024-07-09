@@ -16,6 +16,14 @@ public class Biscuit {
     public static String nextScriptForStart;
 
     private static ArrayList<ArrayList<String>> getDivs(ArrayList<String> str) {
+        // Ignore Comment
+        for (int i = 0; i < str.size(); i++) {
+            String newStr = str.get(i).replaceAll("//(?!.*\")(.*)", "");
+            str.set(i, newStr);
+        }
+        System.out.println(str);
+        
+        // Divide Part
         Pattern pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
@@ -26,14 +34,6 @@ public class Biscuit {
                 words.add(matcher.group());
             }
             result.add(words);
-        }
-
-        for (ArrayList<String> strings : result) {
-            for (int j = 0; j < strings.size(); j++) {
-                if (strings.get(j).startsWith("//")) { // Comment
-                    strings.subList(j, strings.size()).clear();
-                }
-            }
         }
 
         return result;
@@ -132,7 +132,7 @@ public class Biscuit {
             if (Objects.equals(var.name, name)) {
                 var.chVal(val);
                 SpecVars.checkSpecVar(var);
-                varCallback.VarCallbackBehavior(new Variable(name, val));
+                if (varCallback != null) varCallback.VarCallbackBehavior(new Variable(name, val));
                 changed=true;
             }
         }
@@ -154,7 +154,7 @@ public class Biscuit {
         }
         vars.add(var);
         SpecVars.checkSpecVar(var);
-        varCallback.VarCallbackBehavior(var);
+        if (varCallback != null) varCallback.VarCallbackBehavior(var);
     }
 
     public static short checkType(String val) { // 0 == str, 1 == int, 2 == double, 3 == boolean
