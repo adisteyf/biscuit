@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Biscuit {
-    static VarCallbackI varCallback;
+    static VarCallbackI varCallback = null;
     final static ArrayList<Variable> vars = new ArrayList<>();
     public static String nextScriptForStart;
 
@@ -21,7 +21,6 @@ public class Biscuit {
             String newStr = str.get(i).replaceAll("//(?!.*\")(.*)", "");
             str.set(i, newStr);
         }
-        System.out.println(str);
         
         // Divide Part
         Pattern pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
@@ -36,6 +35,9 @@ public class Biscuit {
             result.add(words);
         }
 
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).isEmpty()) result.remove(i);
+        }
         return result;
     }
 
