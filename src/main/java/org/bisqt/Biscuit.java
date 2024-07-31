@@ -41,7 +41,7 @@ public class Biscuit {
         return result;
     }
 
-    public void readScript(String path) {
+    public void readScript(String path) throws BiscuitSyntaxEx {
         nextScriptForStart=null;
         File file = new File(path);
         ArrayList<String> lines = new ArrayList<>();
@@ -64,15 +64,17 @@ public class Biscuit {
         }
     }
 
-    public void readLines(String lines) {
+    public void readLines(String lines) throws BiscuitSyntaxEx {
         ArrayList<String> lines_arr = new ArrayList<>(Arrays.asList(lines.split(";")));
 
         ArrayList<ArrayList<String>> divs = getDivs(lines_arr);
         checkCommands(divs);
     }
 
-    private static void checkCommands(ArrayList<ArrayList<String>> divs) {
+    private static void checkCommands(ArrayList<ArrayList<String>> divs) throws BiscuitSyntaxEx {
+        int string_on = 0;
         for (ArrayList<String> line : divs) {
+            string_on++;
             switch (line.getFirst()) {
                 case "set":
                     if (line.size() == 3) {
@@ -117,11 +119,30 @@ public class Biscuit {
                             changeVal(line.getFirst(), getVar(line.get(1)).getVal());
                         } else {
                             System.err.println("ERROR: '"+line+"'. NOT A STATEMENT");
-                            System.exit(-1);
+                            try {
+                                StringBuilder vars_str = new StringBuilder();
+                                for (Variable var : vars) {
+                                    vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
+                                }
+                                if (vars_str.isEmpty()) vars_str.append("null");
+                                throw new BiscuitSyntaxEx("LOGS: ERR ON "+string_on+" LINE ('"+line+"'). VARS: '"+vars_str+"'");
+                            } catch (BiscuitSyntaxEx e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     } else {
                         System.err.println("ERROR: '"+line+"'. NOT A STATEMENT");
-                        System.exit(-1);
+                        try {
+                            StringBuilder vars_str = new StringBuilder();
+                            for (Variable var : vars) {
+                                vars_str.append(var.name+" = "+var.getVal()+",");
+                            }
+                            vars_str.deleteCharAt(vars_str.length()-1);
+                            if (vars.isEmpty()) vars_str.append("null");
+                            throw new BiscuitSyntaxEx(vars.get(0).name+" LINE ('"+line+"'). VARS: '"+vars_str+"'");
+                        } catch (BiscuitSyntaxEx e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     break;
             }
