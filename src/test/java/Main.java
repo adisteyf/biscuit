@@ -1,5 +1,5 @@
 import org.bisqt.Biscuit;
-import org.bisqt.BiscuitSyntaxEx;
+import org.bisqt.BiscuitEx;
 import org.bisqt.Variable;
 
 public class Main {
@@ -26,7 +26,7 @@ public class Main {
                 test.setVarCallback(Main::v_c);
                 try {
                     test.readScript("/home/adisteyf/IdeaProjects/biscuit/src/main/testscript.bsqt");
-                } catch (BiscuitSyntaxEx e) {
+                } catch (BiscuitEx e) {
                     System.out.println(e.getMessage());
                 }
 

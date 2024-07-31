@@ -41,7 +41,7 @@ public class Biscuit {
         return result;
     }
 
-    public void readScript(String path) throws BiscuitSyntaxEx {
+    public void readScript(String path) throws BiscuitEx {
         nextScriptForStart=null;
         File file = new File(path);
         ArrayList<String> lines = new ArrayList<>();
@@ -64,14 +64,14 @@ public class Biscuit {
         }
     }
 
-    public void readLines(String lines) throws BiscuitSyntaxEx {
+    public void readLines(String lines) throws BiscuitEx {
         ArrayList<String> lines_arr = new ArrayList<>(Arrays.asList(lines.split(";")));
 
         ArrayList<ArrayList<String>> divs = getDivs(lines_arr);
         checkCommands(divs);
     }
 
-    private static void checkCommands(ArrayList<ArrayList<String>> divs) throws BiscuitSyntaxEx {
+    private static void checkCommands(ArrayList<ArrayList<String>> divs) throws BiscuitEx {
         int string_on = 0;
         for (ArrayList<String> line : divs) {
             string_on++;
@@ -123,7 +123,7 @@ public class Biscuit {
                                 vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
                             }
                             if (vars_str.isEmpty()) vars_str.append("null");
-                            throw new BiscuitSyntaxEx("\nERR: SYNTAX ERROR\nON LINE: "+string_on+" ('"+line+"')\nVARS: {"+vars_str+"}");
+                            throw new BiscuitEx("SYNTAX ERROR", string_on, line, vars_str.toString());
                         }
                     } else {
                         StringBuilder vars_str = new StringBuilder();
@@ -131,7 +131,7 @@ public class Biscuit {
                             vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
                         }
                         if (vars_str.isEmpty()) vars_str.append("null");
-                        throw new BiscuitSyntaxEx("\nERR: SYNTAX ERROR\nON LINE: "+string_on+" ('"+line+"')\nVARS: {"+vars_str+"}");
+                        throw new BiscuitEx("SYNTAX ERROR", string_on, line, vars_str.toString());
                     }
                     break;
             }
