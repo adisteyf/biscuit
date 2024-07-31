@@ -118,31 +118,20 @@ public class Biscuit {
                         } else if (getVar(line.get(1)) != null) {
                             changeVal(line.getFirst(), getVar(line.get(1)).getVal());
                         } else {
-                            System.err.println("ERROR: '"+line+"'. NOT A STATEMENT");
-                            try {
-                                StringBuilder vars_str = new StringBuilder();
-                                for (Variable var : vars) {
-                                    vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
-                                }
-                                if (vars_str.isEmpty()) vars_str.append("null");
-                                throw new BiscuitSyntaxEx("LOGS: ERR ON "+string_on+" LINE ('"+line+"'). VARS: '"+vars_str+"'");
-                            } catch (BiscuitSyntaxEx e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    } else {
-                        System.err.println("ERROR: '"+line+"'. NOT A STATEMENT");
-                        try {
                             StringBuilder vars_str = new StringBuilder();
                             for (Variable var : vars) {
-                                vars_str.append(var.name+" = "+var.getVal()+",");
+                                vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
                             }
-                            vars_str.deleteCharAt(vars_str.length()-1);
-                            if (vars.isEmpty()) vars_str.append("null");
-                            throw new BiscuitSyntaxEx(vars.get(0).name+" LINE ('"+line+"'). VARS: '"+vars_str+"'");
-                        } catch (BiscuitSyntaxEx e) {
-                            throw new RuntimeException(e);
+                            if (vars_str.isEmpty()) vars_str.append("null");
+                            throw new BiscuitSyntaxEx("\nERR: SYNTAX ERROR\nON LINE: "+string_on+" ('"+line+"')\nVARS: {"+vars_str+"}");
                         }
+                    } else {
+                        StringBuilder vars_str = new StringBuilder();
+                        for (Variable var : vars) {
+                            vars_str.append("\n"+var.name+" = "+var.getVal()+"\n");
+                        }
+                        if (vars_str.isEmpty()) vars_str.append("null");
+                        throw new BiscuitSyntaxEx("\nERR: SYNTAX ERROR\nON LINE: "+string_on+" ('"+line+"')\nVARS: {"+vars_str+"}");
                     }
                     break;
             }

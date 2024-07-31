@@ -27,7 +27,7 @@ public class Main {
                 try {
                     test.readScript("/home/adisteyf/IdeaProjects/biscuit/src/main/testscript.bsqt");
                 } catch (BiscuitSyntaxEx e) {
-                    throw new RuntimeException(e);
+                    System.out.println(e.getMessage());
                 }
 
             }
